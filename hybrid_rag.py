@@ -1,3 +1,12 @@
+"""
+Description:
+This script implements a hybrid RAG system using LangChain.
+It combines keyword-based and vector-based retrieval methods to answer questions based on a given context.
+The system is designed to work with both structured and unstructured text data, allowing for flexible document processing.
+The script includes functions for loading documents, splitting them into chunks, creating retrievers, and generating responses.
+It also evaluates the system's performance by comparing the generated responses with a set of predefined questions and answers.
+"""
+
 from langchain_community.document_loaders import UnstructuredMarkdownLoader
 from langchain_core.documents import Document
 from langchain.text_splitter import RecursiveCharacterTextSplitter
@@ -11,6 +20,10 @@ from langchain.schema.runnable import RunnablePassthrough
 from langchain.schema.output_parser import StrOutputParser
 import pandas as pd
 import os
+
+from naive_rag import get_naive_vector_retriever
+
+
 os.environ["OPENAI_API_KEY"] = "OPENAI_API_KEY"
 
 # 1. Indexing and building chunks
@@ -185,3 +198,11 @@ if __name__ == "__main__":
     rag_chain = get_rag_chain(ensemble_retriever, template)
     get_response(qa_data_accessibility, rag_chain, 'hybrid_structured_regex_expert')
     get_response(qa_data_accessibility_paraphrased, rag_chain, 'hybrid_structured_regex_amateur')
+
+
+     # Model 5: Naive RAG + raw text + char-based chunking
+    chunks = get_chunks(md_file_path='doc.md', structure_loader=False, separators=None)
+    retriever = get_naive_vector_retriever(chunks)
+    rag_chain = get_rag_chain(retriever, template)
+    get_response(qa_data_accessibility, rag_chain, retriever, 'naive_raw_char_expert')
+    get_response(qa_data_accessibility_paraphrased, rag_chain, retriever, 'naive_raw_char_amateur')
