@@ -16,7 +16,7 @@
 - Includes both expert-level and paraphrased amateur-level accessibility questions.
 
 ### `doc.md`
-- Preprocessed Markdown file representing the structured building code (e.g., accessibility regulations).
+- Partial preprocessed Markdown file representing the structured building code (e.g., accessibility regulations).
 - Used as the knowledge base for the retrieval-augmented generation system.
 
 ---
