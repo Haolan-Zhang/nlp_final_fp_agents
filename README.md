@@ -4,7 +4,7 @@
 
 ## File Overview
 
-### `multi_agent_revision.py`
+### `agents.py`
 - Main script for the floor plan revision pipeline.
 - Implements three core agents:
   - **Code Searcher Agent** – retrieves relevant building code sections.
